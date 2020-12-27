@@ -14,31 +14,29 @@ L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
   accessToken: API_KEY
 }).addTo(myMap);
 
-function chooseColor(x) {
-    switch (x) {
-        case x < 1:
-            return "yellow";
-            break;
-        case mag > 1 && mag < 2:
-            return "orange";
-            break;
-        case mag > 2 && mag < 3:
-            return "red";
-            break;
-        case mag > 3 && mag < 4:
-            return "blue";
-            break;
-        case mag > 4 && mag < 5:
-            return "blue";
-            break;
-        case mag > 5: 
-            return "black"
-    }
-}
 
 d3.json(queryUrl, function(data){
     
-    
+    function chooseColor(x) {
+        if (x < 1){
+            return "yellow"
+        }
+        else if (x < 2){
+            return "red"
+        }
+        else if (x < 3){
+            return "orange"
+        }
+        else if (x < 4){
+            return "green"
+        }
+        else if (x < 5){
+            return "blue"
+        }
+        else {
+            return "black"
+        }
+    }
     
     for (var i = 0; i < data.features.length; i++) {
 
