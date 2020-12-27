@@ -24,11 +24,13 @@ d3.json(queryUrl, function(data){
         let lat = earthquakeData.geometry.coordinates[0]
         let long = earthquakeData.geometry.coordinates[1]
         let mag = earthquakeData.properties.mag
-        let coord = (`${lat}, ${long}`)
             
-        L.circleMarker([lat, long])
-            .addTo(myMap)
-        
-
+        L.circleMarker([long, lat],{
+            radius : mag*2
+        }).bindPopup("<h1>Earthquake Magnitude: " + earthquakeData.properties.mag + "</h1>"
+        + "<h3>Nearest Location: " + earthquakeData.properties.place + "</h3>"
+        + "<h3>Latitude: " + earthquakeData.geometry.coordinates[0] + "</h3>"
+        + "<h3>Longitude: " + earthquakeData.geometry.coordinates[1] + "</h3>")
+        .addTo(myMap)
     }
 })
