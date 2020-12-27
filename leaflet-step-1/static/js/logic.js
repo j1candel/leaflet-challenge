@@ -14,6 +14,13 @@ L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
   accessToken: API_KEY
 }).addTo(myMap);
 
+function chooseColor(mag) {
+    switch (mag) {
+        case mag < 1:
+            return "yellow"
+    }
+}
+
 d3.json(queryUrl, function(data){
     
     
@@ -27,6 +34,8 @@ d3.json(queryUrl, function(data){
             
         L.circleMarker([long, lat],{
             radius : mag*2
+            ,fillColor: mag*2
+            
         }).bindPopup("<h1>Earthquake Magnitude: " + earthquakeData.properties.mag + "</h1>"
         + "<h3>Nearest Location: " + earthquakeData.properties.place + "</h3>"
         + "<h3>Latitude: " + earthquakeData.geometry.coordinates[0] + "</h3>"
