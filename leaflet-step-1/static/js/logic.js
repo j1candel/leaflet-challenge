@@ -16,16 +16,19 @@ L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
 
 d3.json(queryUrl, function(data){
     
-    earthquakeData = data.features
-    console.log(earthquakeData)
     
-    for (var i = 0; i < earthquakeData.length; i++) {
+    
+    for (var i = 0; i < data.features.length; i++) {
 
-    let lat = earthquakeData[i].geometry.coordinates[0]
-    let long = earthquakeData[i].geometry.coordinates[1]
-    let mag = earthquakeData[i].properties.mag
-    
-    
+        earthquakeData = data.features[i]
+        let lat = earthquakeData.geometry.coordinates[0]
+        let long = earthquakeData.geometry.coordinates[1]
+        let mag = earthquakeData.properties.mag
+        let coord = (`${lat}, ${long}`)
+            
+        L.circleMarker([lat, long])
+            .addTo(myMap)
+        
 
     }
 })
