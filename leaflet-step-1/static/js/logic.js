@@ -37,7 +37,7 @@ d3.json(queryUrl, function(data){
             return "black"
         }
     }
-    
+
     for (var i = 0; i < data.features.length; i++) {
 
         earthquakeData = data.features[i]
@@ -55,4 +55,32 @@ d3.json(queryUrl, function(data){
         + "<h3>Longitude: " + earthquakeData.geometry.coordinates[1] + "</h3>")
         .addTo(myMap)
     }
+
+    function getColor(d) {
+        return d < 2  ? 'yellow':
+               d < 3  ? 'red':
+               d < 4  ? 'orange':
+               d < 5  ? 'green':
+               d < 6  ? 'blue':
+                        'black';
+    }
+    
+    var legend = L.control({position: 'bottomright'});
+
+    legend.onAdd = function (map) {
+
+    var div = L.DomUtil.create('div', 'info legend'),
+        grades = [0, 1, 2, 3, 4, 5],
+        labels = ["Magnitude"];
+
+    // loop through our density intervals and generate a label with a colored square for each interval
+    for (var i = 0; i < grades.length; i++) {
+        div.innerHTML +=
+            '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
+            grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+    }
+
+    return div;
+};legend.addTo(map);
+
 })
